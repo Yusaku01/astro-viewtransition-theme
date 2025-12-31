@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+  articles: CollectionEntry<'blog'>[];
+}
+
+const { articles } = Astro.props;
+---
+
+<section>
+  <ul>
+    {articles.map((article) => (
+      <li>
+        <ArticleCard article={article} />
+      </li>
+    ))}
+  </ul>
+</section>

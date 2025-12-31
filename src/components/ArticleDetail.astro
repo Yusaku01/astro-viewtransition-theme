@@ -1,0 +1,20 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'blog'>;
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+
+<article>
+  <header>
+    <h1>{article.data.title}</h1>
+    <p>{article.data.date}</p>
+  </header>
+  <Content />
+  <div><a href={`/`}>トップに戻る</a></div>
+</article>

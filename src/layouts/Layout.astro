@@ -1,3 +1,7 @@
+---
+import { ClientRouter } from 'astro:transitions';
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,18 +9,175 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Astro View Transition Theme</title>
+		<script is:inline>
+			const THEME_STORAGE_KEY = 'theme';
+			const THEMES = {
+				dark: 'dark',
+				light: 'light',
+			};
+
+			const getStoredTheme = () => {
+				const stored = localStorage.getItem(THEME_STORAGE_KEY);
+				if (stored === THEMES.dark || stored === THEMES.light) {
+					return stored;
+				}
+				return null;
+			};
+
+			const getPreferredTheme = () => {
+				const stored = getStoredTheme();
+				if (stored) {
+					return stored;
+				}
+				return window.matchMedia('(prefers-color-scheme: dark)').matches
+					? THEMES.dark
+					: THEMES.light;
+			};
+
+			const applyTheme = (targetDocument, theme) => {
+				targetDocument.documentElement.dataset.theme = theme;
+				targetDocument.documentElement.style.colorScheme = theme;
+			};
+
+			const setTheme = (theme) => {
+				localStorage.setItem(THEME_STORAGE_KEY, theme);
+				applyTheme(document, theme);
+			};
+
+			const syncToggle = () => {
+				const button = document.querySelector('[data-theme-toggle]');
+				if (!button) {
+					return;
+				}
+
+				const label = button.querySelector('[data-theme-label]');
+				const theme = document.documentElement.dataset.theme || getPreferredTheme();
+				const isDark = theme === THEMES.dark;
+
+				button.setAttribute('aria-pressed', String(isDark));
+				if (label) {
+					label.textContent = isDark ? 'Dark' : 'Light';
+				}
+
+				if (button.dataset.bound) {
+					return;
+				}
+
+				button.dataset.bound = 'true';
+				button.addEventListener('click', () => {
+					const nextTheme =
+						document.documentElement.dataset.theme === THEMES.dark
+							? THEMES.light
+							: THEMES.dark;
+					setTheme(nextTheme);
+					syncToggle();
+				});
+			};
+
+			applyTheme(document, getPreferredTheme());
+
+			document.addEventListener('astro:before-swap', (event) => {
+				applyTheme(event.newDocument, getPreferredTheme());
+			});
+
+			document.addEventListener('astro:page-load', () => {
+				syncToggle();
+			});
+		</script>
+		<ClientRouter />
 	</head>
 	<body>
+		<div class="toolbar">
+			<button
+				class="theme-toggle"
+				type="button"
+				data-theme-toggle
+				aria-label="Toggle color theme"
+			>
+				<span class="theme-toggle__label">Theme</span>
+				<span class="theme-toggle__value" data-theme-label>Light</span>
+			</button>
+		</div>
 		<slot />
 	</body>
 </html>
 
 <style>
+	:root {
+		color-scheme: light;
+		--background: #f7f5ef;
+		--surface: #ffffff;
+		--text: #191a1c;
+		--muted: #5b5e66;
+		--border: #d9d4c8;
+		--accent: #1b6c8c;
+	}
+
+	html[data-theme='dark'] {
+		--background: #0e1116;
+		--surface: #151a21;
+		--text: #e9edf2;
+		--muted: #a3abb8;
+		--border: #2b3340;
+		--accent: #7cc4de;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
 	html,
 	body {
 		margin: 0;
 		width: 100%;
 		height: 100%;
+	}
+
+	body {
+		padding: 20px;
+		background: var(--background);
+		color: var(--text);
+		transition: background-color 200ms ease, color 200ms ease;
+	}
+
+	a {
+		color: var(--accent);
+	}
+
+	.toolbar {
+		display: flex;
+		justify-content: flex-end;
+		padding-block: 8px 20px;
+	}
+
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px 14px;
+		border-radius: 999px;
+		border: 1px solid var(--border);
+		background: var(--surface);
+		color: var(--text);
+		font-size: 0.85rem;
+		letter-spacing: 0.02em;
+		cursor: pointer;
+	}
+
+	.theme-toggle:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.theme-toggle__label {
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--muted);
+	}
+
+	.theme-toggle__value {
+		font-weight: 600;
 	}
 </style>
