@@ -1,6 +1,6 @@
 {
   "name": "astro-viewtransition-theme",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Astro theme toggle with view transitions support.",
   "license": "MIT",
   "repository": {
