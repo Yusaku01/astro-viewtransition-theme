@@ -20,37 +20,23 @@
     "view-transitions"
   ],
   "type": "module",
-  "main": "./src/index.js",
-  "types": "./index.d.ts",
+  "sideEffects": false,
   "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "default": "./src/index.js"
-    },
-    "./ThemeToggle": "./src/components/ThemeToggle.astro",
-    "./ThemeButton": "./src/components/ThemeButton.astro",
-    "./ThemeInit": "./src/components/ThemeInit.astro"
+    "./ThemeToggle": "./src/ThemeToggle.astro",
+    "./ThemeButton": "./src/ThemeButton.astro",
+    "./ThemeInit": "./src/ThemeInit.astro"
   },
   "files": [
-    "index.d.ts",
-    "src/components/ThemeToggle.astro",
-    "src/components/ThemeButton.astro",
-    "src/components/ThemeInit.astro",
-    "src/index.js",
-    "README.md"
+    "src/ThemeToggle.astro",
+    "src/ThemeButton.astro",
+    "src/ThemeInit.astro",
+    "README.md",
+    "LICENSE"
   ],
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
   "peerDependencies": {
     "astro": "^5.0.0"
   },
   "devDependencies": {
-    "astro": "^5.16.6",
-    "@astrojs/check": "^0.9.6",
     "typescript": "^5.9.3"
   }
 }

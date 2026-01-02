@@ -17,7 +17,7 @@ View Transitions対応でシームレスなダーク/ライトモード切り替
 - **Multi-toggle sync** - Multiple toggle buttons stay synchronized
 - **Customizable** - Style via CSS variables
 - **Accessible** - ARIA attributes and screen reader support
-- **TypeScript** - Full type definitions included
+- **TypeScript** - Astro component types supported
 
 ---
 
@@ -28,7 +28,7 @@ View Transitions対応でシームレスなダーク/ライトモード切り替
 - **複数トグル同期** - ページ内の複数のトグルボタンが同期
 - **カスタマイズ可能** - CSS変数でスタイリング
 - **アクセシブル** - ARIA属性とスクリーンリーダー対応
-- **TypeScript** - 型定義付き
+- **TypeScript** - Astroの型サポートに対応
 
 ## Installation / インストール
 
@@ -48,7 +48,8 @@ pnpm add astro-viewtransition-theme
 
 ```astro
 ---
-import { ThemeInit, ThemeToggle } from 'astro-viewtransition-theme';
+import ThemeInit from 'astro-viewtransition-theme/ThemeInit';
+import ThemeToggle from 'astro-viewtransition-theme/ThemeToggle';
 ---
 
 <html lang="en">
@@ -129,7 +130,8 @@ Minimal setup with default button:
 
 ```astro
 ---
-import { ThemeInit, ThemeToggle } from 'astro-viewtransition-theme';
+import ThemeInit from 'astro-viewtransition-theme/ThemeInit';
+import ThemeToggle from 'astro-viewtransition-theme/ThemeToggle';
 ---
 
 <html lang="en">
@@ -146,7 +148,9 @@ import { ThemeInit, ThemeToggle } from 'astro-viewtransition-theme';
 
 ```astro
 ---
-import { ThemeInit, ThemeToggle, ThemeButton } from 'astro-viewtransition-theme';
+import ThemeInit from 'astro-viewtransition-theme/ThemeInit';
+import ThemeToggle from 'astro-viewtransition-theme/ThemeToggle';
+import ThemeButton from 'astro-viewtransition-theme/ThemeButton';
 ---
 
 <html lang="en">
@@ -167,7 +171,8 @@ import { ThemeInit, ThemeToggle, ThemeButton } from 'astro-viewtransition-theme'
 ---
 // src/layouts/Layout.astro
 import { ClientRouter } from 'astro:transitions';
-import { ThemeInit, ThemeToggle } from 'astro-viewtransition-theme';
+import ThemeInit from 'astro-viewtransition-theme/ThemeInit';
+import ThemeToggle from 'astro-viewtransition-theme/ThemeToggle';
 ---
 
 <!doctype html>
@@ -199,7 +204,8 @@ Use your own button element with `data-theme-toggle` attribute:
 
 ```astro
 ---
-import { ThemeInit, ThemeToggle } from 'astro-viewtransition-theme';
+import ThemeInit from 'astro-viewtransition-theme/ThemeInit';
+import ThemeToggle from 'astro-viewtransition-theme/ThemeToggle';
 ---
 
 <ThemeInit />
@@ -332,17 +338,9 @@ The library handles Astro view transition events automatically:
 
 ## TypeScript
 
-Import components with full type support:
+Import components via subpath:
 
 型サポート付きでコンポーネントをインポート：
-
-```typescript
-import { ThemeInit, ThemeToggle, ThemeButton } from 'astro-viewtransition-theme';
-```
-
-Or import individually:
-
-個別にインポート：
 
 ```typescript
 import ThemeInit from 'astro-viewtransition-theme/ThemeInit';
