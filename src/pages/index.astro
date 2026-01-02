@@ -1,16 +1,9 @@
 ---
-import ArticleList from '../components/ArticleList.astro';
-import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-
-const articles = (await getCollection('blog')).sort((a, b) =>
-  a.data.date.localeCompare(b.data.date),
-);
 ---
 
 <Layout>
   <main>
-    <h1>Mini Blog</h1>
-    <ArticleList articles={articles} />
+    <h1>Astro ViewTransition Theme</h1>
   </main>
 </Layout>
