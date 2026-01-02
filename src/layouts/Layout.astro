@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import ThemeInit from '../components/ThemeInit.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 ---
 
@@ -11,18 +12,7 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro View Transition Theme</title>
-		<script is:inline>
-			const stored = localStorage.getItem('theme');
-			const theme =
-				stored === 'dark' || stored === 'light'
-					? stored
-					: window.matchMedia('(prefers-color-scheme: dark)').matches
-						? 'dark'
-						: 'light';
-
-			document.documentElement.dataset.theme = theme;
-			document.documentElement.style.colorScheme = theme;
-		</script>
+		<ThemeInit />
 		<ClientRouter />
 	</head>
 	<body>

@@ -1,8 +1,10 @@
 ---
 import ThemeButton from './ThemeButton.astro';
+
+const hasSlot = Astro.slots.has('default');
 ---
 
-<ThemeButton />
+{hasSlot ? <slot /> : <ThemeButton />}
 
 <script>
 	const THEME_STORAGE_KEY = 'theme';
@@ -56,6 +58,9 @@ import ThemeButton from './ThemeButton.astro';
 		}
 
 		const theme = getActiveTheme();
+		if (!isTheme(document.documentElement.dataset.theme)) {
+			applyTheme(document, theme);
+		}
 		const isDark = theme === THEMES.dark;
 
 		buttons.forEach((button) => {

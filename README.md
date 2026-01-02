@@ -1,46 +1,50 @@
-# Astro Starter Kit: Basics
+# astro-viewtransition-theme
+
+Astro theme toggle components with view transitions support.
+
+## Install
 
 ```sh
-pnpm create astro@latest -- --template basics
+npm install astro-viewtransition-theme
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Usage
 
-## 🚀 Project Structure
+```astro
+---
+import { ThemeInit, ThemeToggle } from 'astro-viewtransition-theme';
+---
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+<html lang="en">
+	<head>
+		<ThemeInit />
+	</head>
+	<body>
+		<ThemeToggle />
+	</body>
+</html>
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### Custom button
 
-## 🧞 Commands
+```astro
+---
+import { ThemeInit, ThemeToggle, ThemeButton } from 'astro-viewtransition-theme';
+---
 
-All commands are run from the root of the project, from a terminal:
+<ThemeInit />
+<ThemeToggle>
+	<ThemeButton />
+</ThemeToggle>
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Notes
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- The current theme is stored in `localStorage` under the `theme` key.
+- The active theme is applied via `data-theme` on the `<html>` element.
+- `ThemeToggle` listens for `astro:before-swap` and `astro:page-load` to keep the theme during view transitions.
+- Customize the button via CSS variables:
+  - `--toggle-track`
+  - `--toggle-thumb`
+  - `--toggle-icon`
+  - `--accent` (focus ring)
