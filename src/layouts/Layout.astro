@@ -12,79 +12,16 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro View Transition Theme</title>
 		<script is:inline>
-			const THEME_STORAGE_KEY = 'theme';
-			const THEMES = {
-				dark: 'dark',
-				light: 'light',
-			};
+			const stored = localStorage.getItem('theme');
+			const theme =
+				stored === 'dark' || stored === 'light'
+					? stored
+					: window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light';
 
-			const getStoredTheme = () => {
-				const stored = localStorage.getItem(THEME_STORAGE_KEY);
-				if (stored === THEMES.dark || stored === THEMES.light) {
-					return stored;
-				}
-				return null;
-			};
-
-			const getPreferredTheme = () => {
-				const stored = getStoredTheme();
-				if (stored) {
-					return stored;
-				}
-				return window.matchMedia('(prefers-color-scheme: dark)').matches
-					? THEMES.dark
-					: THEMES.light;
-			};
-
-			const applyTheme = (targetDocument, theme) => {
-				targetDocument.documentElement.dataset.theme = theme;
-				targetDocument.documentElement.style.colorScheme = theme;
-			};
-
-			const setTheme = (theme) => {
-				localStorage.setItem(THEME_STORAGE_KEY, theme);
-				applyTheme(document, theme);
-			};
-
-			const syncToggle = () => {
-				const button = document.querySelector('[data-theme-toggle]');
-				if (!button) {
-					return;
-				}
-
-				const label = button.querySelector('[data-theme-label]');
-				const theme = document.documentElement.dataset.theme || getPreferredTheme();
-				const isDark = theme === THEMES.dark;
-
-				button.setAttribute('aria-pressed', String(isDark));
-				if (label) {
-					label.textContent = isDark ? 'Dark' : 'Light';
-				}
-
-				if (button.dataset.bound) {
-					return;
-				}
-
-				button.dataset.bound = 'true';
-				button.addEventListener('click', () => {
-					const nextTheme =
-						document.documentElement.dataset.theme === THEMES.dark
-							? THEMES.light
-							: THEMES.dark;
-					setTheme(nextTheme);
-					syncToggle();
-				});
-			};
-
-			applyTheme(document, getPreferredTheme());
-
-			document.addEventListener('astro:before-swap', (event) => {
-				applyTheme(event.newDocument, getPreferredTheme());
-			});
-
-			document.addEventListener('astro:page-load', () => {
-				syncToggle();
-			});
+			document.documentElement.dataset.theme = theme;
+			document.documentElement.style.colorScheme = theme;
 		</script>
 		<ClientRouter />
 	</head>
