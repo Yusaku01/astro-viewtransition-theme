@@ -1,6 +1,6 @@
 {
   "name": "astro-viewtransition-theme",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Astro theme toggle with view transitions support.",
   "license": "MIT",
   "repository": {
@@ -20,8 +20,13 @@
     "view-transitions"
   ],
   "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "exports": {
-    ".": "./src/index.js",
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
     "./ThemeToggle": "./src/components/ThemeToggle.astro",
     "./ThemeButton": "./src/components/ThemeButton.astro",
     "./ThemeInit": "./src/components/ThemeInit.astro"
@@ -30,6 +35,7 @@
     "src/components/ThemeToggle.astro",
     "src/components/ThemeButton.astro",
     "src/components/ThemeInit.astro",
+    "src/index.d.ts",
     "src/index.js",
     "README.md"
   ],
