@@ -2,6 +2,23 @@
   "name": "astro-viewtransition-theme",
   "version": "0.0.1",
   "description": "Astro theme toggle with view transitions support.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yusaku01/astro-viewtransition-theme.git"
+  },
+  "homepage": "https://github.com/Yusaku01/astro-viewtransition-theme#readme",
+  "bugs": {
+    "url": "https://github.com/Yusaku01/astro-viewtransition-theme/issues"
+  },
+  "keywords": [
+    "astro",
+    "theme",
+    "theme-toggle",
+    "dark-mode",
+    "color-scheme",
+    "view-transitions"
+  ],
   "type": "module",
   "exports": {
     ".": "./src/index.js",
